@@ -18,11 +18,11 @@ public class Reservas {
 
     @ManyToOne
     @JoinColumn(name="id_cliente")
-    private Cliente id_cliente;
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name="id_entrenamiento")
-    private Entrenamiento id_entrenamiento;
+    private Entrenamiento entrenamiento;
 
     public int getId_reserva() {
         return id_reserva;
@@ -42,5 +42,18 @@ public class Reservas {
     }
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    public Entrenamiento getEntrenamiento() {
+        return entrenamiento;
+    }
+    public void setEntrenamiento(Entrenamiento entrenamiento) {
+        this.entrenamiento = entrenamiento;
     }
 }
