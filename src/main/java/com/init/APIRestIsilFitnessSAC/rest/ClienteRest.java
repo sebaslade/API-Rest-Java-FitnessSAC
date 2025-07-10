@@ -1,6 +1,7 @@
 package com.init.APIRestIsilFitnessSAC.rest;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,8 @@ public class ClienteRest {
 
     //PUT
     @PutMapping("/{clienteId}")
-    public ResponseEntity<?> updateCliente(@PathVariable int clienteId, @RequestBody Cliente cliente) {
-        Cliente clienteExistente = clienteRepository.findById(clienteId);
+    public ResponseEntity<?> updateCliente(@PathVariable("clienteId") int id_cliente, @RequestBody Cliente cliente) {
+        Cliente clienteExistente = clienteRepository.findById(id_cliente);
         if (clienteExistente == null) {
             return ResponseEntity.status(404).body("Cliente no encontrado");
         }
@@ -105,4 +106,27 @@ public class ClienteRest {
         return ResponseEntity.ok(nuevo);
     }
 
+    //Actualizar password
+    @PutMapping("/{clienteId}/cambiarPassword")
+    public ResponseEntity<?> cambiarPassword(@PathVariable("clienteId") int id_cliente, @RequestBody Map<String, String> passwordMap) {
+        Cliente cliente = clienteRepository.findById(id_cliente);
+        if (cliente == null) {
+            return ResponseEntity.status(404).body("Cliente no encontrado");
+        }
+
+        String passwordActual = passwordMap.get("passwordActual");
+        String nuevaPassword = passwordMap.get("nuevaPassword");
+
+        if (!cliente.getPassword().equals(passwordActual)) {
+            return ResponseEntity.status(401).body("La contraseña actual no es correcta");
+        }
+
+        if (nuevaPassword == null || nuevaPassword.length() < 6) {
+            return ResponseEntity.badRequest().body("La nueva contraseña debe tener al menos 6 caracteres");
+        }
+
+        cliente.setPassword(nuevaPassword);
+        clienteRepository.save(cliente);
+        return ResponseEntity.ok("Contraseña actualizada exitosamente");
+    }
 }
