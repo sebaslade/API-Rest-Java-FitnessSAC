@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.init.APIRestIsilFitnessSAC.entity.Cliente;
+import com.init.APIRestIsilFitnessSAC.entity.Reservas;
 import com.init.APIRestIsilFitnessSAC.repository.ClienteRepository;
+import com.init.APIRestIsilFitnessSAC.repository.ReservasRepository;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ClienteRest {
     @Autowired
     private ClienteRepository clienteRepository;
+    @Autowired
+    private ReservasRepository reservaRepository;
 
     //GET
     @GetMapping
@@ -128,5 +132,17 @@ public class ClienteRest {
         cliente.setPassword(nuevaPassword);
         clienteRepository.save(cliente);
         return ResponseEntity.ok("Contraseña actualizada exitosamente");
+    }
+
+    //Reservas por Cliente
+    @GetMapping("/{clienteId}/reservas")
+    public ResponseEntity<?> obtenerReservasPorCliente(@PathVariable("clienteId") int id_cliente) {
+        Cliente cliente = clienteRepository.findById(id_cliente);
+        if (cliente == null) {
+            return ResponseEntity.status(404).body("Cliente no encontrado");
+        }
+
+        List<Reservas> reservas = reservaRepository.findByCliente(cliente);
+        return ResponseEntity.ok(reservas);
     }
 }

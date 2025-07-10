@@ -2,6 +2,8 @@ package com.init.APIRestIsilFitnessSAC.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -18,6 +20,7 @@ public class Reservas {
 
     @ManyToOne
     @JoinColumn(name="id_cliente")
+    @JsonIgnoreProperties("reservas")
     private Cliente cliente;
 
     @ManyToOne
