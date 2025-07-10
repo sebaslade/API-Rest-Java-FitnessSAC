@@ -41,15 +41,17 @@ public class ClienteRest {
     }
 
     //PUT
-    @PutMapping
-    public ResponseEntity<Cliente> updateCliente(@RequestBody Cliente cliente) {
-        Cliente existingCliente = clienteRepository.findById(cliente.getId_cliente());
-        existingCliente.setNombre(cliente.getNombre());
-        existingCliente.setEmail(cliente.getEmail());
-        existingCliente.setPassword(cliente.getPassword());
-        existingCliente.setEstado(cliente.getEstado());
-        Cliente updatedCliente = clienteRepository.save(existingCliente);
-        return ResponseEntity.ok(updatedCliente);
+    @PutMapping("/{clienteId}")
+    public ResponseEntity<?> updateCliente(@PathVariable int clienteId, @RequestBody Cliente cliente) {
+        Cliente clienteExistente = clienteRepository.findById(clienteId);
+        if (clienteExistente == null) {
+            return ResponseEntity.status(404).body("Cliente no encontrado");
+        }
+        clienteExistente.setNombre(cliente.getNombre());
+        clienteExistente.setEmail(cliente.getEmail());
+        clienteExistente.setTelefono(cliente.getTelefono());
+        clienteRepository.save(clienteExistente);
+        return ResponseEntity.ok(clienteExistente);
     }
 
     //DELETE
