@@ -13,6 +13,7 @@ public class Cliente {
     private int id_cliente;
     private String nombre;
     private String email;
+    private String telefono;
     private String password;
     private String estado;
 
@@ -33,6 +34,12 @@ public class Cliente {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getTelefono() {
+        return telefono;
+    }
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
     public String getPassword() {
         return password;
