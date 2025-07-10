@@ -79,4 +79,28 @@ public class ClienteRest {
         return ResponseEntity.ok(cliente);
     }
     
+    //POST -> Registrar Cliente
+    @PostMapping("/registrar")
+    public ResponseEntity<?> registrarCliente(@RequestBody Cliente cliente) {
+        // Cliente registrado debe tener email único
+        Cliente existente = clienteRepository.findByEmail(cliente.getEmail());
+        if (existente != null) {
+            return ResponseEntity.status(409).body("El email ya está registrado");
+        }
+
+        if (cliente.getNombre() == null || cliente.getNombre().trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("El nombre es obligatorio");
+        }
+        if (cliente.getPassword() == null || cliente.getPassword().length() < 6) {
+            return ResponseEntity.badRequest().body("La contraseña debe tener al menos 6 caracteres");
+        }
+
+        cliente.setEstado("Activo");
+
+        Cliente nuevo = clienteRepository.save(cliente);
+        nuevo.setPassword(null);
+
+        return ResponseEntity.ok(nuevo);
+    }
+
 }
