@@ -1,5 +1,6 @@
 package com.init.APIRestIsilFitnessSAC.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -29,6 +30,7 @@ public class Entrenamiento {
     private LocalTime hora_inicio;
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime hora_fin;
+	private BigDecimal precio;
     private Integer max_participantes;
 
     @ManyToOne
@@ -85,6 +87,14 @@ public class Entrenamiento {
 
 	public void setMax_participantes(Integer max_participantes) {
 		this.max_participantes = max_participantes;
+	}
+
+	public BigDecimal getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
 	}
 
 	public Modalidad getModalidad() {

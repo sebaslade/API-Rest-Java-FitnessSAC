@@ -43,7 +43,6 @@ public class Reservas {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
     public Cliente getCliente() {
         return cliente;
     }
