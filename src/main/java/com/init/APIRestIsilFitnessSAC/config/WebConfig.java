@@ -10,7 +10,8 @@ public class WebConfig implements WebMvcConfigurer{
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedOrigins("https://fitnesssac-qip31p5z2-sebaslades-projects.vercel.app")
+            .allowedOrigins("https://fitnesssac-qip31p5z2-sebaslades-projects.vercel.app",
+                "https://fitnesssac.vercel.app")
             .allowedMethods("*")
             .allowedHeaders("*");
     }
